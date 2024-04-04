@@ -29,6 +29,15 @@ agent.on("applicationsessionstarted", (event) => {
   webphone.monitorStart({ rtc: true });
 });
 
+agent.on("localstream", (event) => {
+  document.getElementById("localView").srcObject = event.stream;
+});
+
+agent.on("remotestream", (event) => {
+  document.getElementById("remoteView").srcObject = event.stream;
+  audio.srcObject = event.stream;
+});
+
 agent.on("call", (event) => {
   let call = event.call;
   switch (call.localConnectionInfo) {
