@@ -1,6 +1,28 @@
-let dialer = document.querySelector(".dialer");
-let outBoundScreen = document.querySelector(".out-bound-screen-wrapper");
-let acceptCallBtn = document.querySelector("#accept-call-btn");
+const PHONE_SCREEN = {
+  dialerScreen: "dialer",
+  outBoundScreen: "out-bound-screen-wrapper",
+  incomingScreen: "incoming-screen",
+};
+
+const dialerScreen = document.querySelector(".dialer");
+const outBoundScreen = document.querySelector(".out-bound-screen-wrapper");
+const incomingScreen = document.querySelector(".incoming-screen");
+const acceptCallBtn = document.querySelector("#accept-call-btn");
+const dialerBtn = document.querySelectorAll(".dialer-btn");
+const displayPhoneNumber = document.querySelector("#displayPhoneNumber");
+const makeCallBtn = document.querySelector("#dialer-btn-make-call");
+
+const showScreen = (className) => {
+  const screens = document.querySelectorAll(".screen");
+  screens.forEach((screen) => {
+    screen.style.display = "none";
+  });
+
+  const selectedScreen = document.querySelector(`.${className}`);
+  if (selectedScreen) {
+    selectedScreen.style.display = "block";
+  }
+};
 
 let agent = anCti.newAgent();
 let webphone;
@@ -37,17 +59,25 @@ agent.on("remotestream", (event) => {
   document.getElementById("remoteView").srcObject = event.stream;
   audio.srcObject = event.stream;
 });
+navigator.mediaDevices.enumerateDevices().then((mediaDevices) => {
+  console.log({ mediaDevices });
+  mediaDevices
+    .filter(({ kind }) => kind == "audioinput")
+    .forEach((dev) => {
+      console.log(`VTC ${dev.label} => ${dev.deviceId}`);
+    });
+});
 
 agent.on("call", (event) => {
   let call = event.call;
   switch (call.localConnectionInfo) {
     case "alerting":
       console.log(`incomming call from ${call.number} ${call.name}`);
-      dialer.style.display = "none";
-      outBoundScreen.style.display = "block";
+      showScreen(PHONE_SCREEN.incomingScreen);
       break;
     case "connected":
-      console.log(`connected to ${call.number}`);
+      console.log(`connected to ${call.number}`, call);
+      showScreen(PHONE_SCREEN.outBoundScreen);
       break;
     case "fail":
       console.log(`call failed, cause is ${event.content.cause}`);
@@ -57,6 +87,7 @@ agent.on("call", (event) => {
       break;
     case "null":
       console.log(`call to ${call.number} is gone`);
+      showScreen(PHONE_SCREEN.dialerScreen);
       break;
   }
 });
@@ -67,3 +98,24 @@ acceptCallBtn.onclick = () => {
     call.answerCall({ audio: true, video: false });
   }
 };
+
+dialerBtn.forEach((btn) => {
+  btn.onclick = () => {
+    const currentPhoneNumber = displayPhoneNumber.textContent;
+    const newPhoneNumber = currentPhoneNumber + btn.textContent;
+    displayPhoneNumber.innerHTML = newPhoneNumber;
+  };
+});
+
+makeCallBtn.addEventListener("click", () => {
+  let call = webphone.calls[0];
+  if (!call) {
+    webphone.makeCall(displayPhoneNumber.textContent, {
+      autoOriginate: "doNotPrompt",
+      subjectOfCall: "BargeIn",
+      audio: true,
+      video: false,
+    });
+    showScreen(PHONE_SCREEN.outBoundScreen);
+  }
+});

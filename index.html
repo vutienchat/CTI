@@ -22,16 +22,33 @@
       style="display: none"
     ></video>
     <div class="phone">
-      <div class="screen">
-        <div class="caller">Incoming Call</div>
-        <div class="actions">
-          <button class="btn accept-btn">Accept</button>
-          <button class="btn reject-btn">Reject</button>
+      <div class="screen out-bound-screen-wrapper">
+        <div class="out-bound-screen">
+          <div>
+            <div class="avatar">
+              <img
+                src="http://210.245.85.229:9967/Images/AvatarUsers/0ba5f6be-4199-4b27-9609-c206c21faa0b_irene.jpg"
+                alt="Avatar"
+              />
+            </div>
+            <div class="caller-info">
+              <div class="caller-name">John Doe</div>
+              <div class="phone-number">+123456789</div>
+            </div>
+          </div>
+          <div class="outbound-controls">
+            <div class="control-icon">
+              <img
+                src="https://cdn-icons-png.freepik.com/256/9946/9946316.png"
+                alt=""
+              />
+            </div>
+          </div>
         </div>
       </div>
-      <div class="dialer">
+      <div class="screen dialer">
         <div class="dialer-screen">
-          <div class="input"></div>
+          <div class="input" id="displayPhoneNumber"></div>
         </div>
         <div class="dialer-buttons">
           <div class="dialer-btn-item">
@@ -71,7 +88,7 @@
             <button class="dialer-btn">#</button>
           </div>
           <div class="dialer-btn-item call-btn" id="call-btn">
-            <div class="control-icon reject-icon">
+            <div class="control-icon" id="dialer-btn-make-call">
               <img
                 src="https://uxwing.com/wp-content/themes/uxwing/download/communication-chat-call/accept-call-icon.png"
                 alt="Speaker Icon"
@@ -80,8 +97,8 @@
           </div>
         </div>
       </div>
-      <div class="out-bound-screen-wrapper">
-        <div class="out-bound-screen">
+      <div class="screen incoming-screen">
+        <div class="incoming">
           <div class="avatar">
             <img
               src="http://210.245.85.229:9967/Images/AvatarUsers/0ba5f6be-4199-4b27-9609-c206c21faa0b_irene.jpg"
