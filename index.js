@@ -11,6 +11,7 @@ const acceptCallBtn = document.querySelector("#accept-call-btn");
 const dialerBtn = document.querySelectorAll(".dialer-btn");
 const displayPhoneNumber = document.querySelector("#displayPhoneNumber");
 const makeCallBtn = document.querySelector("#dialer-btn-make-call");
+const endCallBtn = document.querySelector("#end-call-btn");
 
 const showScreen = (className) => {
   const screens = document.querySelectorAll(".screen");
@@ -109,13 +110,18 @@ dialerBtn.forEach((btn) => {
 
 makeCallBtn.addEventListener("click", () => {
   let call = webphone.calls[0];
-  if (!call) {
+  if (!call && displayPhoneNumber.textContent) {
+    console.log(displayPhoneNumber.textContent);
     webphone.makeCall(displayPhoneNumber.textContent, {
       autoOriginate: "doNotPrompt",
-      subjectOfCall: "BargeIn",
       audio: true,
       video: false,
     });
     showScreen(PHONE_SCREEN.outBoundScreen);
   }
+});
+
+endCallBtn.addEventListener("click", () => {
+  let call = webphone.calls[0];
+  call.clearConnection();
 });
