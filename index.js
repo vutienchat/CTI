@@ -31,7 +31,7 @@ let audio = new Audio();
 audio.autoplay = true;
 
 agent.startApplicationSession({
-  username: "chatvt@sphinxjsc.com",
+  username: "quyetnh@sphinxjsc.com",
   password: "Abc123456",
   url: "wss://as7presales.apac-ancontact.com/cti/ws",
 });
@@ -47,7 +47,7 @@ agent.on("applicationsessionstarted", (event) => {
 });
 
 agent.on("applicationsessionstarted", (event) => {
-  webphone = agent.getDevice("sip:1002@term.323");
+  webphone = agent.getDevice("sip:1003@term.322");
 
   webphone.monitorStart({ rtc: true });
 });
