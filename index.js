@@ -31,8 +31,8 @@ let audio = new Audio();
 audio.autoplay = true;
 
 agent.startApplicationSession({
-  username: "quyetnh@sphinxjsc.com",
-  password: "Abc123456",
+  username: "cti-app@mobifone.vn",
+  password: "]6ko.:}_c5p'@6Qb~\\|1",
   url: "wss://as7presales.apac-ancontact.com/cti/ws",
 });
 
@@ -47,7 +47,7 @@ agent.on("applicationsessionstarted", (event) => {
 });
 
 agent.on("applicationsessionstarted", (event) => {
-  webphone = agent.getDevice("sip:1003@term.322");
+  webphone = agent.getDevice("sip:1005@term.355");
 
   webphone.monitorStart({ rtc: true });
 });
