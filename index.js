@@ -70,6 +70,7 @@ navigator.mediaDevices.enumerateDevices().then((mediaDevices) => {
 });
 
 agent.on("call", (event) => {
+  console.log('event',event)
   let call = event.call;
   switch (call.localConnectionInfo) {
     case "alerting":
