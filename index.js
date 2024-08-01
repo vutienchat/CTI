@@ -47,7 +47,7 @@ agent.on("applicationsessionstarted", (event) => {
 });
 
 agent.on("applicationsessionstarted", (event) => {
-  webphone = agent.getDevice("sip:1005@term.335");
+  webphone = agent.getDevice("sip:1002@term.442");
 
   webphone.monitorStart({ rtc: true });
 });
